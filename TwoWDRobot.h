@@ -55,13 +55,17 @@ class obstacleAvoidanceRobot : public ultraSound, public MDD3A
 {
 public:
   obstacleAvoidanceRobot(int trigPin, int echoPin, uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
-  void runTheRobot(int obstacleDistance, int turnTime, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+  void runObstacleRobot(int obstacleDistance, int turnTime, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
 };
 
-// class cliffDetectionRobot: public infraredDigital, public MDD3A{
-//   public:
-//   cliffDetectionRobot()
+class cliffDetectionRobot : public MDD3A
+{
+private:
+  bool leftSensorStatus, rightSensorStatus;
 
-// };
+public:
+  cliffDetectionRobot(int leftSensorPin, int rightSensorPin, uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
+  void runCliffRobot(int turnDelay, bool sensorType = true, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+};
 
 #endif

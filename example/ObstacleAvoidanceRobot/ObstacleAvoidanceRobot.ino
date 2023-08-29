@@ -16,5 +16,5 @@ void loop()
   Serial.print("Sensor Distance: ");Serial.println(myRobot.getUltrasoundDistance());
   //Method takes minimum obstacle distance to avoid and delay time to deviate from the obstacle.
   //By default PWM values for motors are set to 50 each, user can change as per their needs.
-  myRobot.runTheRobot(30,500);
+  myRobot.runObstacleRobot(30,500);
 }
