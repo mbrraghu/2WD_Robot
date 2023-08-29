@@ -1,0 +1,2 @@
+# 2WD_Robot
+Library to run the 2WD robot as Bluetooth remote controlled robot, Obstacle avoidance, cliff detection, Line following using line sensor array, wall following robot, 2D maze solver. The library provides APIs for accessing basic sensors like, ultrasound (HC-SR04), IR sensor single and array module, and motor driver with speed and direction control. The library also supports standalone APIs for the applications mentioned above.
