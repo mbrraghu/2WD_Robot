@@ -145,16 +145,18 @@ void obstacleAvoidanceRobot::runObstacleRobot(int obstacleDistance, int turnTime
 
 cliffDetectionRobot::cliffDetectionRobot(int leftSensorPin, int rightSensorPin, uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode) : MDD3A(motorsPinMode, M1_A, M1_B, M2_A, M2_B)
 {
-  infraredDigital IR_left(leftSensorPin);
-  infraredDigital IR_right(rightSensorPin);
-
-  leftSensorStatus = IR_left.getInfraredDigitalSignal();
-  rightSensorStatus = IR_right.getInfraredDigitalSignal();
+  leftSignalPin = leftSensorPin;
+  rightSignalPin = rightSensorPin;
 }
 
 void cliffDetectionRobot::runCliffRobot(int turnDelay, bool sensorType = true, int leftWheelSpeed = 50, int rightWheelSpeed = 50)
 {
   int sensor_type = int(sensorType);
+  infraredDigital left_sensor(leftSignalPin);
+  infraredDigital right_sensor(rightSignalPin);
+
+  bool leftSensorStatus = left_sensor.getInfraredDigitalSignal();
+  bool rightSensorStatus = right_sensor.getInfraredDigitalSignal();
 
   switch (sensor_type)
   {
@@ -173,7 +175,7 @@ void cliffDetectionRobot::runCliffRobot(int turnDelay, bool sensorType = true, i
       motorDrive(-leftWheelSpeed, -rightWheelSpeed, turnDelay);
       motorDrive(leftWheelSpeed, -rightWheelSpeed, turnDelay);
     }
-    else
+    else if (leftSensorStatus == HIGH && rightSensorStatus == HIGH)
     {
       motorDrive(-leftWheelSpeed, -rightWheelSpeed, turnDelay);
       motorDrive(leftWheelSpeed, -rightWheelSpeed, turnDelay);
@@ -195,7 +197,7 @@ void cliffDetectionRobot::runCliffRobot(int turnDelay, bool sensorType = true, i
       motorDrive(-leftWheelSpeed, -rightWheelSpeed, turnDelay);
       motorDrive(leftWheelSpeed, -rightWheelSpeed, turnDelay);
     }
-    else
+    else if (leftSensorStatus == LOW && rightSensorStatus == LOW)
     {
       motorDrive(-leftWheelSpeed, -rightWheelSpeed, turnDelay);
       motorDrive(leftWheelSpeed, -rightWheelSpeed, turnDelay);

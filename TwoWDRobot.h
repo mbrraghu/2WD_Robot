@@ -61,7 +61,7 @@ public:
 class cliffDetectionRobot : public MDD3A
 {
 private:
-  bool leftSensorStatus, rightSensorStatus;
+  int leftSignalPin, rightSignalPin;
 
 public:
   cliffDetectionRobot(int leftSensorPin, int rightSensorPin, uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
