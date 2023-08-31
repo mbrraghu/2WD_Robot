@@ -68,4 +68,12 @@ public:
   void runCliffRobot(int turnDelay, bool sensorType = true, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
 };
 
+class bluetoothRobotCar : public MDD3A
+{
+public:
+  bluetoothRobotCar(uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
+  void runRobotCar(int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+  char bluetoothData();
+};
+
 #endif

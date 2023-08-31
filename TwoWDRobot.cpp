@@ -208,3 +208,66 @@ void cliffDetectionRobot::runCliffRobot(int turnDelay, bool sensorType = true, i
     break;
   }
 }
+
+bluetoothRobotCar::bluetoothRobotCar(uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode) : MDD3A(motorsPinMode, M1_A, M1_B, M2_A, M2_B)
+{
+  Serial.begin(9600);
+}
+
+void bluetoothRobotCar::runRobotCar(int leftWheelSpeed = 50, int rightWheelSpeed = 50)
+{
+  char data;
+  if (Serial.available())
+  {
+    data = Serial.read();
+    delay(20);
+    switch (data)
+    {
+    case 'F':
+      motorDrive(leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 'B':
+      motorDrive(-leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    case 'R':
+      motorDrive(leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    case 'L':
+      motorDrive(-leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 'G':
+      motorDrive(leftWheelSpeed / 2, rightWheelSpeed, 50);
+      break;
+
+    case 'I':
+      motorDrive(leftWheelSpeed, rightWheelSpeed / 2, 50);
+      break;
+
+    case 'H':
+      motorDrive(-leftWheelSpeed / 2, -rightWheelSpeed, 50);
+      break;
+
+    case 'J':
+      motorDrive(-leftWheelSpeed, -rightWheelSpeed / 2, 50);
+      break;
+
+    default:
+      motorDrive(0, 0, 50);
+      break;
+    }
+  }
+}
+
+// To display the data received by the Bluetooth device
+char bluetoothRobotCar::bluetoothData()
+{
+  if (Serial.available())
+  {
+    return Serial.read();
+    delay(20);
+  }
+}
