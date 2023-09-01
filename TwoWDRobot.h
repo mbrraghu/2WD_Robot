@@ -76,4 +76,21 @@ public:
   char bluetoothData();
 };
 
+enum wallFollowMode
+{
+  LEFT_FOLLOW,
+  RIGHT_FOLLOW
+};
+
+class wallFollowRobot : public MDD3A
+{
+private:
+  wallFollowMode _mode;
+  int trigger1, trigger2, echo1, echo2;
+
+public:
+  wallFollowRobot(wallFollowMode mode, int USfrontPins[2], int USsidePins[2], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
+  void runWallFollowRobot(float frontDistance, float sideDistance, int leftWheelSpeed = 20, int rightWheelSpeed = 20);
+};
+
 #endif

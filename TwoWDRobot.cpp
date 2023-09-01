@@ -271,3 +271,85 @@ char bluetoothRobotCar::bluetoothData()
     delay(20);
   }
 }
+
+wallFollowRobot::wallFollowRobot(wallFollowMode mode, int USfrontPins[2], int USsidePins[2], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode) : MDD3A(motorsPinMode, M1_A, M1_B, M2_A, M2_B)
+{
+  _mode = mode;
+  trigger1 = USfrontPins[0];
+  echo1 = USfrontPins[1];
+  trigger2 = USsidePins[0];
+  echo2 = USsidePins[1];
+}
+void wallFollowRobot::runWallFollowRobot(float frontDistance, float sideDistance, int leftWheelSpeed = 20, int rightWheelSpeed = 20)
+{
+  ultraSound US_front(trigger1, echo1);
+  ultraSound US_side(trigger2, echo2);
+
+  float front_distance = US_front.getUltrasoundDistance();
+  float side_distance = US_side.getUltrasoundDistance();
+
+  switch (_mode)
+  {
+  case LEFT_FOLLOW:
+    if (front_distance > frontDistance)
+    {
+      if (side_distance < sideDistance)
+      {
+        motorDrive(leftWheelSpeed * 0.75, -rightWheelSpeed * 0.75, 500);
+        motorDrive(0, 0, 50);
+        motorDrive(leftWheelSpeed, rightWheelSpeed, 1000);
+        motorDrive(0, 0, 50);
+      }
+      else if (side_distance > sideDistance + 10.0)
+      {
+        motorDrive(-leftWheelSpeed * 0.75, rightWheelSpeed * 0.75, 50);
+        motorDrive(0, 0, 50);
+        motorDrive(leftWheelSpeed, rightWheelSpeed, 1000);
+        motorDrive(0, 0, 50);
+      }
+      else
+      {
+        motorDrive(leftWheelSpeed * 1.5, rightWheelSpeed * 1.5, 50);
+      }
+    }
+    else
+    {
+      motorDrive(0, 0, 20);
+      motorDrive(leftWheelSpeed * 2, -rightWheelSpeed * 2, 1000);
+    }
+    break;
+
+  case RIGHT_FOLLOW:
+    if (front_distance > frontDistance)
+    {
+      if (side_distance < sideDistance)
+      {
+        motorDrive(-leftWheelSpeed * 0.75, rightWheelSpeed * 0.75, 500);
+        motorDrive(0, 0, 50);
+        motorDrive(leftWheelSpeed, rightWheelSpeed, 1000);
+        motorDrive(0, 0, 50);
+      }
+      else if (side_distance > sideDistance + 10.0)
+      {
+        motorDrive(leftWheelSpeed * 0.75, -rightWheelSpeed * 0.75, 50);
+        motorDrive(0, 0, 50);
+        motorDrive(leftWheelSpeed, rightWheelSpeed, 1000);
+        motorDrive(0, 0, 50);
+      }
+      else
+      {
+        motorDrive(leftWheelSpeed * 1.5, rightWheelSpeed * 1.5, 50);
+      }
+    }
+    else
+    {
+      motorDrive(0, 0, 20);
+      motorDrive(-leftWheelSpeed * 2, rightWheelSpeed * 2, 1000);
+    }
+    break;
+
+  default:
+    motorDrive(0, 0, 50);
+    break;
+  }
+}
