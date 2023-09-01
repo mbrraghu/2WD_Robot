@@ -149,16 +149,17 @@ cliffDetectionRobot::cliffDetectionRobot(int leftSensorPin, int rightSensorPin, 
   rightSignalPin = rightSensorPin;
 }
 
-void cliffDetectionRobot::runCliffRobot(int turnDelay, bool sensorType = true, int leftWheelSpeed = 50, int rightWheelSpeed = 50)
+void cliffDetectionRobot::runCliffRobot(sensorType type, int turnDelay, int leftWheelSpeed = 50, int rightWheelSpeed = 50)
 {
-  int sensor_type = int(sensorType);
+  sensorType _type;
+  _type = type;
   infraredDigital left_sensor(leftSignalPin);
   infraredDigital right_sensor(rightSignalPin);
 
   bool leftSensorStatus = left_sensor.getInfraredDigitalSignal();
   bool rightSensorStatus = right_sensor.getInfraredDigitalSignal();
 
-  switch (sensor_type)
+  switch (_type)
   {
   case 0:
     if (leftSensorStatus == LOW && rightSensorStatus == LOW)

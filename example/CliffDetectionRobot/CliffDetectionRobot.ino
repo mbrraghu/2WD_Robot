@@ -16,5 +16,5 @@ void loop()
   // Method takes delay time to deviate from the cliff and sensor type.
   // if sensors are active high, arguments will be 'true' by default else it should be 'false'.
   // By default PWM values for motors are set to 50 each, user can change as per their needs.
-  myRobot.runCliffRobot(500,false);
+  myRobot.runCliffRobot(ACTIVE_LOW, 500);
 }

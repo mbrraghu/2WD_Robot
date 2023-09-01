@@ -58,6 +58,12 @@ public:
   void runObstacleRobot(int obstacleDistance, int turnTime, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
 };
 
+enum sensorType
+{
+  ACTIVE_LOW,
+  ACTIVE_HIGH
+};
+
 class cliffDetectionRobot : public MDD3A
 {
 private:
@@ -65,7 +71,7 @@ private:
 
 public:
   cliffDetectionRobot(int leftSensorPin, int rightSensorPin, uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
-  void runCliffRobot(int turnDelay, bool sensorType = true, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+  void runCliffRobot(sensorType type, int turnDelay, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
 };
 
 class bluetoothRobotCar : public MDD3A
@@ -93,4 +99,10 @@ public:
   void runWallFollowRobot(float frontDistance, float sideDistance, int leftWheelSpeed = 20, int rightWheelSpeed = 20);
 };
 
+class lineFollowRobot : public MDD3A
+{
+public:
+  lineFollowRobot(int sensorPins[5], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
+  void runLineFollowRobot(sensorType type, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+};
 #endif
