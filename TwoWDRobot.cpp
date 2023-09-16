@@ -354,3 +354,93 @@ void wallFollowRobot::runWallFollowRobot(float frontDistance, float sideDistance
     break;
   }
 }
+
+lineFollowRobot::lineFollowRobot(int sensorpins[], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode) : MDD3A(motorsPinMode, M1_A, M1_B, M2_A, M2_B)
+{
+  for (int i = 0; i < 5; i++)
+  {
+    sensorPins[i] = sensorpins[i];
+  }
+}
+
+void lineFollowRobot::runLineFollowRobot(sensorType type, int leftWheelSpeed = 50, int rightWheelSpeed = 50)
+{
+  sensorType _type;
+  _type = type;
+  byte sensorData = lineSensorRead(sensorPins);
+  Serial.println(sensorData, BIN);
+  switch (_type)
+  {
+  case 0:
+    switch (sensorData)
+    {
+    case 228: // forward move for line sensor output 00100
+      motorDrive(leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 232: // left move for line sensor output 01000
+      motorDrive(-leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 240: // left move for line sensor output 10000
+      motorDrive(-leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 226: // right move for line sensor output 00010
+      motorDrive(leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    case 225: // right move for line sensor output 00010
+      motorDrive(leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    default:
+      motorDrive(0, 0, 50);
+      break;
+    }
+    break;
+
+  case 1:
+    switch (sensorData)
+    {
+    case 251: // forward move for line sensor output 11011
+      motorDrive(leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 247: // left move for line sensor output 10111
+      motorDrive(-leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 239: // left move for line sensor output 01111
+      motorDrive(-leftWheelSpeed, rightWheelSpeed, 50);
+      break;
+
+    case 253: // right move for line sensor output 11101
+      motorDrive(leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    case 254: // right move for line sensor output 11110
+      motorDrive(leftWheelSpeed, -rightWheelSpeed, 50);
+      break;
+
+    default:
+      motorDrive(0, 0, 50);
+      break;
+    }
+    break;
+
+  default:
+    break;
+  }
+}
+
+byte lineFollowRobot::lineSensorRead(int pins[])
+{
+  byte x = 0b11100000;
+  for (int i = 0; i < 5; i++)
+  {
+    // infraredDigital sensor(pins[i]);
+    bitWrite(x, i, digitalRead(pins[i]));
+  }
+  return x;
+}

@@ -4,11 +4,7 @@
 
 #include <Arduino.h>
 
-enum MODE
-{
-  PWM_PWM,
-  PWM_DIR
-};
+enum MODE{PWM_PWM,PWM_DIR};
 
 class MDD3A
 {
@@ -101,8 +97,12 @@ public:
 
 class lineFollowRobot : public MDD3A
 {
+private:
+  int sensorPins[5];
+
 public:
-  lineFollowRobot(int sensorPins[5], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
+  lineFollowRobot(int sensorpins[], uint8_t M1_A, uint8_t M1_B, uint8_t M2_A, uint8_t M2_B, MODE motorsPinMode);
   void runLineFollowRobot(sensorType type, int leftWheelSpeed = 50, int rightWheelSpeed = 50);
+  byte lineSensorRead(int pins[]);
 };
 #endif
