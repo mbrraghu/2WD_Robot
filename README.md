@@ -43,8 +43,15 @@ An Arduino library for controlling 2-wheel drive robots with multiple autonomous
 
 ## Installation
 
+### Via Arduino Library Manager (Recommended)
+1. Open Arduino IDE
+2. Go to Sketch > Include Library > Manage Libraries...
+3. Search for "2WD_Robot"
+4. Click Install
+
+### Manual Installation
 1. Download this repository
-2. Copy the `TwoWDRobot.h` and `TwoWDRobot.cpp` files to your Arduino libraries folder
+2. Copy the folder to your Arduino libraries folder (usually `Documents/Arduino/libraries/`)
 3. Restart the Arduino IDE
 
 ## API Reference
